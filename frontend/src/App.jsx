@@ -1,26 +1,30 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import Layout from './components/Layout'
-import LoginPage from './pages/LoginPage'
-import WorkspaceSetupPage from './pages/WorkspaceSetupPage'
-import ScriptsPage from './pages/ScriptsPage'
-import NewScriptPage from './pages/NewScriptPage'
-import ScriptViewPage from './pages/ScriptViewPage'
-import ScriptExecutePage from './pages/ScriptExecutePage'
-import TargetGroupsPage from './pages/TargetGroupsPage'
-import NewTargetGroupPage from './pages/NewTargetGroupPage'
-import TargetGroupViewPage from './pages/TargetGroupViewPage'
-import EditScriptPage from './pages/EditScriptPage'
-import EditTargetGroupPage from './pages/EditTargetGroupPage'
-import IAMCredentialsPage from './pages/IAMCredentialsPage'
-import NewIAMCredentialPage from './pages/NewIAMCredentialPage'
-import EditIAMCredentialPage from './pages/EditIAMCredentialPage'
-import AuditLogPage from './pages/AuditLogPage'
-import AdminDashboardPage from './pages/AdminDashboardPage'
-import RunnersPage from './pages/RunnersPage'
-import NewRunnerPage from './pages/NewRunnerPage'
-import RunnerViewPage from './pages/RunnerViewPage'
-import EditRunnerPage from './pages/EditRunnerPage'
+import { LazyWrapper, lazyWithRetry, preloadCriticalComponents } from './components/LazyComponents'
+
+// Lazy load all page components with retry mechanism
+const LoginPage = lazyWithRetry(() => import('./pages/LoginPage'), 'LoginPage')
+const WorkspaceSetupPage = lazyWithRetry(() => import('./pages/WorkspaceSetupPage'), 'WorkspaceSetupPage')
+const ScriptsPage = lazyWithRetry(() => import('./pages/ScriptsPage'), 'ScriptsPage')
+const NewScriptPage = lazyWithRetry(() => import('./pages/NewScriptPage'), 'NewScriptPage')
+const ScriptViewPage = lazyWithRetry(() => import('./pages/ScriptViewPage'), 'ScriptViewPage')
+const ScriptExecutePage = lazyWithRetry(() => import('./pages/ScriptExecutePage'), 'ScriptExecutePage')
+const EditScriptPage = lazyWithRetry(() => import('./pages/EditScriptPage'), 'EditScriptPage')
+const TargetGroupsPage = lazyWithRetry(() => import('./pages/TargetGroupsPage'), 'TargetGroupsPage')
+const NewTargetGroupPage = lazyWithRetry(() => import('./pages/NewTargetGroupPage'), 'NewTargetGroupPage')
+const TargetGroupViewPage = lazyWithRetry(() => import('./pages/TargetGroupViewPage'), 'TargetGroupViewPage')
+const EditTargetGroupPage = lazyWithRetry(() => import('./pages/EditTargetGroupPage'), 'EditTargetGroupPage')
+const IAMCredentialsPage = lazyWithRetry(() => import('./pages/IAMCredentialsPage'), 'IAMCredentialsPage')
+const NewIAMCredentialPage = lazyWithRetry(() => import('./pages/NewIAMCredentialPage'), 'NewIAMCredentialPage')
+const EditIAMCredentialPage = lazyWithRetry(() => import('./pages/EditIAMCredentialPage'), 'EditIAMCredentialPage')
+const AuditLogPage = lazyWithRetry(() => import('./pages/AuditLogPage'), 'AuditLogPage')
+const AdminDashboardPage = lazyWithRetry(() => import('./pages/AdminDashboardPage'), 'AdminDashboardPage')
+const RunnersPage = lazyWithRetry(() => import('./pages/RunnersPage'), 'RunnersPage')
+const NewRunnerPage = lazyWithRetry(() => import('./pages/NewRunnerPage'), 'NewRunnerPage')
+const RunnerViewPage = lazyWithRetry(() => import('./pages/RunnerViewPage'), 'RunnerViewPage')
+const EditRunnerPage = lazyWithRetry(() => import('./pages/EditRunnerPage'), 'EditRunnerPage')
 
 // Admin Route Component
 const AdminRoute = ({ children }) => {
@@ -65,18 +69,35 @@ const ProtectedRoute = ({ children }) => {
 }
 
 function App() {
+  // Start preloading critical components after app initialization
+  useEffect(() => {
+    preloadCriticalComponents()
+  }, [])
+
   return (
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/setup" element={<WorkspaceSetupPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/setup" element={
+            <LazyWrapper>
+              <WorkspaceSetupPage />
+            </LazyWrapper>
+          } />
+          <Route path="/login" element={
+            <LazyWrapper>
+              <LoginPage />
+            </LazyWrapper>
+          } />
           <Route path="/" element={<Navigate to="/scripts" replace />} />
           <Route 
             path="/scripts" 
             element={
               <ProtectedRoute>
-                <Layout><ScriptsPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <ScriptsPage />
+                  </LazyWrapper>
+                </Layout>
               </ProtectedRoute>
             } 
           />
@@ -84,7 +105,11 @@ function App() {
             path="/scripts/new" 
             element={
               <ProtectedRoute>
-                <Layout><NewScriptPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <NewScriptPage />
+                  </LazyWrapper>
+                </Layout>
               </ProtectedRoute>
             } 
           />
@@ -92,7 +117,11 @@ function App() {
             path="/scripts/:id" 
             element={
               <ProtectedRoute>
-                <Layout><ScriptViewPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <ScriptViewPage />
+                  </LazyWrapper>
+                </Layout>
               </ProtectedRoute>
             } 
           />
@@ -100,7 +129,11 @@ function App() {
             path="/scripts/:id/edit" 
             element={
               <ProtectedRoute>
-                <Layout><EditScriptPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <EditScriptPage />
+                  </LazyWrapper>
+                </Layout>
               </ProtectedRoute>
             } 
           />
@@ -108,7 +141,11 @@ function App() {
             path="/scripts/:id/execute" 
             element={
               <ProtectedRoute>
-                <Layout><ScriptExecutePage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <ScriptExecutePage />
+                  </LazyWrapper>
+                </Layout>
               </ProtectedRoute>
             } 
           />
@@ -116,7 +153,11 @@ function App() {
             path="/admin" 
             element={
               <AdminRoute>
-                <Layout><AdminDashboardPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <AdminDashboardPage />
+                  </LazyWrapper>
+                </Layout>
               </AdminRoute>
             } 
           />
@@ -124,7 +165,11 @@ function App() {
             path="/targets" 
             element={
               <AdminRoute>
-                <Layout><TargetGroupsPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <TargetGroupsPage />
+                  </LazyWrapper>
+                </Layout>
               </AdminRoute>
             } 
           />
@@ -132,7 +177,11 @@ function App() {
             path="/targets/new" 
             element={
               <AdminRoute>
-                <Layout><NewTargetGroupPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <NewTargetGroupPage />
+                  </LazyWrapper>
+                </Layout>
               </AdminRoute>
             } 
           />
@@ -140,7 +189,11 @@ function App() {
             path="/targets/:id" 
             element={
               <AdminRoute>
-                <Layout><TargetGroupViewPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <TargetGroupViewPage />
+                  </LazyWrapper>
+                </Layout>
               </AdminRoute>
             } 
           />
@@ -148,7 +201,11 @@ function App() {
             path="/targets/:id/edit" 
             element={
               <AdminRoute>
-                <Layout><EditTargetGroupPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <EditTargetGroupPage />
+                  </LazyWrapper>
+                </Layout>
               </AdminRoute>
             } 
           />
@@ -156,7 +213,11 @@ function App() {
             path="/iam-credentials" 
             element={
               <AdminRoute>
-                <Layout><IAMCredentialsPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <IAMCredentialsPage />
+                  </LazyWrapper>
+                </Layout>
               </AdminRoute>
             } 
           />
@@ -164,7 +225,11 @@ function App() {
             path="/iam-credentials/new" 
             element={
               <AdminRoute>
-                <Layout><NewIAMCredentialPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <NewIAMCredentialPage />
+                  </LazyWrapper>
+                </Layout>
               </AdminRoute>
             } 
           />
@@ -172,7 +237,11 @@ function App() {
             path="/iam-credentials/:id/edit" 
             element={
               <AdminRoute>
-                <Layout><EditIAMCredentialPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <EditIAMCredentialPage />
+                  </LazyWrapper>
+                </Layout>
               </AdminRoute>
             } 
           />
@@ -180,7 +249,11 @@ function App() {
             path="/audit-log" 
             element={
               <ProtectedRoute>
-                <Layout><AuditLogPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <AuditLogPage />
+                  </LazyWrapper>
+                </Layout>
               </ProtectedRoute>
             } 
           />
@@ -188,7 +261,11 @@ function App() {
             path="/runners" 
             element={
               <AdminRoute>
-                <Layout><RunnersPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <RunnersPage />
+                  </LazyWrapper>
+                </Layout>
               </AdminRoute>
             } 
           />
@@ -196,7 +273,11 @@ function App() {
             path="/runners/new" 
             element={
               <AdminRoute>
-                <Layout><NewRunnerPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <NewRunnerPage />
+                  </LazyWrapper>
+                </Layout>
               </AdminRoute>
             } 
           />
@@ -204,7 +285,11 @@ function App() {
             path="/runners/:id" 
             element={
               <AdminRoute>
-                <Layout><RunnerViewPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <RunnerViewPage />
+                  </LazyWrapper>
+                </Layout>
               </AdminRoute>
             } 
           />
@@ -212,7 +297,11 @@ function App() {
             path="/runners/:id/edit" 
             element={
               <AdminRoute>
-                <Layout><EditRunnerPage /></Layout>
+                <Layout>
+                  <LazyWrapper minimal>
+                    <EditRunnerPage />
+                  </LazyWrapper>
+                </Layout>
               </AdminRoute>
             } 
           />
