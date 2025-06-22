@@ -18,8 +18,8 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - "3000:80"
-      - "3443:443"
+      - "80:80"
+      - "443:443"
     environment:
       - SSL_ENABLED=${SSL_ENABLED:-false}
       - SSL_CERT_PATH=${SSL_CERT_PATH:-/etc/nginx/ssl/cert.pem}
