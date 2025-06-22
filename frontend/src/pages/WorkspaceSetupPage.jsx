@@ -158,7 +158,7 @@ const WorkspaceSetupPage = () => {
             Set up your workspace
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Configure your organization's Scaler workspace
+            Configure your organization's workspace
           </p>
         </div>
 

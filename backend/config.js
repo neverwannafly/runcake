@@ -6,7 +6,7 @@ module.exports = {
     nodeEnv: process.env.NODE_ENV || 'development'
   },
   database: {
-    path: process.env.DB_PATH || './data/scaler.db'
+    path: process.env.DB_PATH || './data/dev.db'
   },
   jwt: {
     secret: process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production',

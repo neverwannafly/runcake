@@ -101,7 +101,7 @@ class AWSService {
         Parameters: {
           commands: [finalCommand]
         },
-        Comment: `Scaler script execution (${runnerName}) - ${new Date().toISOString()}`,
+        Comment: `Runcake script execution (${runnerName}) - ${new Date().toISOString()}`,
         TimeoutSeconds: 3600
       })
 

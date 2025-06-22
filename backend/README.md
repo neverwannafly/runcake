@@ -1,4 +1,4 @@
-# Scaler Backend API
+# Backend API
 
 A comprehensive Node.js backend for script management and execution platform with AWS integration.
 
@@ -45,7 +45,7 @@ npm start
 ### Default Admin Account
 
 ```
-Email: admin@scaler.com
+Email: admin@example.com
 Password: admin123
 ```
 
@@ -93,7 +93,7 @@ PORT=3001
 NODE_ENV=development
 
 # Database
-DB_PATH=./database/scaler.db
+DB_PATH=./data/dev.db
 
 # JWT Configuration
 JWT_SECRET=your-super-secret-jwt-key

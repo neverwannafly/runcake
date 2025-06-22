@@ -1,7 +1,7 @@
 {
-  "name": "scaler-backend",
+  "name": "runcake-backend",
   "version": "1.0.0",
-  "description": "Backend API for Scaler script management platform",
+  "description": "Backend API for script management platform",
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",
@@ -37,6 +37,6 @@
     "ssm",
     "automation"
   ],
-  "author": "Scaler Team",
+  "author": "Shubham Anand",
   "license": "MIT"
 }

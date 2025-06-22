@@ -568,7 +568,7 @@ router.get('/avatar/:userId', async (req, res) => {
     const fetch = require('node-fetch')
     const response = await fetch(user.avatar_url, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; ScalerBot/1.0)',
+        'User-Agent': 'Mozilla/5.0 (compatible; Bot/1.0)',
         'Accept': 'image/*'
       }
     })

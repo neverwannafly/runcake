@@ -57,7 +57,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 app.get('/health', (req, res) => {
   res.json({
     success: true,
-    message: 'Scaler API is running',
+    message: 'Backend API is running',
     timestamp: new Date().toISOString(),
     version: '1.0.0'
   })
@@ -93,7 +93,7 @@ app.use((err, req, res, next) => {
 const PORT = config.server.port
 
 app.listen(PORT, () => {
-  console.log(`🚀 Scaler Backend Server is running on port ${PORT}`)
+  console.log(`🚀 Backend Server is running on port ${PORT}`)
   console.log(`📊 Environment: ${config.server.nodeEnv}`)
   console.log(`🔗 API Base URL: http://localhost:${PORT}`)
   console.log(`🏥 Health Check: http://localhost:${PORT}/health`)
