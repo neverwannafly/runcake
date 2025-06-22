@@ -1,5 +1,4 @@
-backend.env
-frontend.env
+*.env
 
 */.env
 */.db

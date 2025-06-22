@@ -4,14 +4,14 @@ services:
   backend:
     build: ./backend
     env_file:
-      - ./backend.env
+      - ./.env
     volumes:
       - backend_data:/app/data
 
   frontend:
     build: ./frontend
     env_file:
-      - ./frontend.env
+      - ./.env
     depends_on:
       - backend
 
