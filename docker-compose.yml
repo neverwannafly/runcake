@@ -25,11 +25,11 @@ services:
       - SSL_CERT_PATH=${SSL_CERT_PATH:-/etc/nginx/ssl/cert.pem}
       - SSL_KEY_PATH=${SSL_KEY_PATH:-/etc/nginx/ssl/key.pem}
     volumes:
-      - ./nginx-http.conf:/etc/nginx/nginx-http.conf:ro
-      - ./nginx-ssl.conf:/etc/nginx/nginx-ssl.conf:ro
-      - ./nginx-entrypoint.sh:/docker-entrypoint.sh:ro
+      - ./nginx/nginx-http.conf:/etc/nginx/nginx-http.conf:ro
+      - ./nginx/nginx-ssl.conf:/etc/nginx/nginx-ssl.conf:ro
+      - ./nginx/nginx-entrypoint.sh:/docker-entrypoint.sh:ro
       - ${SSL_CERT_DIR:-./ssl}:/etc/nginx/ssl:ro
-    command: ["/docker-entrypoint.sh"]
+    command: ["bash /docker-entrypoint.sh"]
     depends_on:
       - backend
       - frontend
