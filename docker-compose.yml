@@ -29,7 +29,7 @@ services:
       - ./nginx/nginx-ssl.conf:/etc/nginx/nginx-ssl.conf:ro
       - ./nginx/nginx-entrypoint.sh:/docker-entrypoint.sh:ro
       - ${SSL_CERT_DIR:-./ssl}:/etc/nginx/ssl:ro
-    command: ["bash /docker-entrypoint.sh"]
+    command: ["/bin/sh", "/docker-entrypoint.sh"]
     depends_on:
       - backend
       - frontend
