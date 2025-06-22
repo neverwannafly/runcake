@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
   backend:
-    build: ./scaler-backend
+    build: ./backend
     env_file:
       - ./backend.env
     volumes:
       - backend_data:/app/data
 
   frontend:
-    build: ./scaler-frontend
+    build: ./frontend
     env_file:
       - ./frontend.env
     depends_on:
