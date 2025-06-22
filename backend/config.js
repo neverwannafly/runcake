@@ -16,7 +16,10 @@ module.exports = {
     defaultRegion: process.env.AWS_DEFAULT_REGION || 'us-east-1'
   },
   cors: {
-    frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173'
+    frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173',
+    allowedOrigins: process.env.ALLOWED_ORIGINS ? 
+      process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim()) : 
+      ['http://localhost:5173', 'http://localhost:3000']
   },
   google: {
     clientId: process.env.GOOGLE_CLIENT_ID || ''
